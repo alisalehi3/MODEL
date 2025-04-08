@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش تعاملی | مدل سایبرنتیک شناختی</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Cytoscape.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape-panzoom@2.5.3/cytoscape-panzoom.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">مدل سایبرنتیک شناختی</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">صفحه اصلی</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="model.html">معرفی مدل</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="interactive.html">نمایش تعاملی</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documentation.html">مستندات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">درباره ما</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="py-5 bg-light">
+        <div class="container">
+            <h1 class="display-4">نمایش تعاملی</h1>
+            <p class="lead">تجربه تعاملی مدل سایبرنتیک شناختی با رابط کاربری مبتنی بر آگاهی و نمایش انسان‌ها به عنوان نقاط</p>
+        </div>
+    </header>
+
+    <!-- Interactive Tabs -->
+    <section class="py-5">
+        <div class="container">
+            <ul class="nav nav-tabs mb-4" id="interactiveTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="network-tab" data-bs-toggle="tab" data-bs-target="#network" type="button" role="tab" aria-controls="network" aria-selected="true">مدل شبکه‌ای انسان‌محور</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="diffusion-tab" data-bs-toggle="tab" data-bs-target="#diffusion" type="button" role="tab" aria-controls="diffusion" aria-selected="false">شبیه‌سازی انتشار اطلاعات</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="biocybernetic-tab" data-bs-toggle="tab" data-bs-target="#biocybernetic" type="button" role="tab" aria-controls="biocybernetic" aria-selected="false">حلقه بیوسایبرنتیک</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="iit-tab" data-bs-toggle="tab" data-bs-target="#iit" type="button" role="tab" aria-controls="iit" aria-selected="false">نظریه اطلاعات یکپارچه</button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="interactiveTabsContent">
+                <!-- Network Visualization Tab -->
+                <div class="tab-pane fade show active" id="network" role="tabpanel" aria-labelledby="network-tab">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h3 class="card-title">نمایش شبکه‌ای انسان‌ها به عنوان نقاط</h3>
+                                    <div id="network-visualization" style="height: 500px; border: 1px solid #ddd;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title">توزیع درجه</h5>
+                                            <canvas id="degree-distribution-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title">توزیع مرکزیت</h5>
+                                            <canvas id="centrality-distribution-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">کنترل‌های شبکه</h5>
+                                    <div class="mb-3">
+                                        <label for="layout-select" class="form-label">چیدمان شبکه:</label>
+                                        <select id="layout-select" class="form-select">
+                                            <option value="cose">چیدمان فیزیکی</option>
+                                            <option value="circle">چیدمان دایره‌ای</option>
+                                            <option value="grid">چیدمان شبکه‌ای</option>
+                                            <option value="concentric">چیدمان هم‌مرکز</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="centrality-select" class="form-label">معیار مرکزیت:</label>
+                                        <select id="centrality-select" class="form-select">
+                                            <option value="degree">مرکزیت درجه</option>
+                                            <option value="betweenness">مرکزیت بینابینی</option>
+                                            <option value="closeness">مرکزیت نزدیکی</option>
+                                            <option value="eigenvector">مرکزیت بردار ویژه</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="node-size-slider" class="form-label">اندازه گره‌ها: <span id="node-size-value">20</span></label>
+                                        <input type="range" class="form-range" id="node-size-slider" min="10" max="50" value="20">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="edge-width-slider" class="form-label">ضخامت یال‌ها: <span id="edge-width-value">3</span></label>
+                                        <input type="range" class="form-range" id="edge-width-slider" min="1" max="10" value="3">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="node-count-slider" class="form-label">تعداد گره‌ها: <span id="node-count-value">30</span></label>
+                                        <input type="range" class="form-range" id="node-count-slider" min="5" max="100" value="30">
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button id="run-simulation" class="btn btn-primary">اجرای شبیه‌سازی</button>
+                                        <button id="reset-simulation" class="btn btn-secondary">بازنشانی شبیه‌سازی</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">آمار شبکه</h5>
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>تعداد گره‌ها:</th>
+                                                <td id="stat-node-count">0</td>
+                                            </tr>
+                                            <tr>
+                                                <th>تعداد یال‌ها:</th>
+                                                <td id="stat-edge-count">0</td>
+                                            </tr>
+                                            <tr>
+                                                <th>تراکم شبکه:</th>
+                                                <td id="stat-density">0.000</td>
+                                            </tr>
+                                            <tr>
+                                                <th>میانگین درجه:</th>
+                                                <td id="stat-avg-degree">0.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="individual-tab" data-bs-toggle="tab" data-bs-target="#individual" type="button" role="tab" aria-controls="individual" aria-selected="true">ویژگی‌های فردی</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="relational-tab" data-bs-toggle="tab" data-bs-target="#relational" type="button" role="tab" aria-controls="relational" aria-selected="false">ویژگی‌های ارتباطی</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="centrality-tab" data-bs-toggle="tab" data-bs-target="#centrality" type="button" role="tab" aria-controls="centrality" aria-selected="false">ویژگی‌های مرکزیت</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="individual" role="tabpanel" aria-labelledby="individual-tab">
+                                            <h6 class="card-title">جزئیات گره انتخاب شده</h6>
+                                            <div id="node-details-individual">
+                                                <p class="text-muted">لطفاً یک گره را از نمودار انتخاب کنید تا جزئیات آن نمایش داده شود.</p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="relational" role="tabpanel" aria-labelledby="relational-tab">
+                                            <h6 class="card-title">ویژگی‌های ارتباطی</h6>
+                                            <div id="node-details-relational">
+                                                <p class="text-muted">لطفاً یک گره را از نمودار انتخاب کنید تا جزئیات آن نمایش داده شود.</p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="centrality" role="tabpanel" aria-labelledby="centrality-tab">
+                                            <h6 class="card-title">معیارهای مرکزیت</h6>
+                                            <div id="node-details-centrality">
+                                                <p class="text-muted">لطفاً یک گره را از نمودار انتخاب کنید تا جزئیات آن نمایش داده شود.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Diffusion Simulation Tab -->
+                <div class="tab-pane fade" id="diffusion" role="tabpanel" aria-labelledby="diffusion-tab">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h3 class="card-title">شبیه‌سازی انتشار اطلاعات در شبکه</h3>
+                                    <canvas id="diffusion-chart" height="300"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">توضیحات</h5>
+                                    <p>این شبیه‌سازی نشان می‌دهد که چگونه اطلاعات (یا آگاهی) در شبکه انسانی انتشار می‌یابد. سه مدل اصلی انتشار نمایش داده شده است:</p>
+                                    <ul>
+                                        <li><strong>مدل SI (مستعد-آلوده):</strong> در این مدل، افراد یا مستعد هستند یا آلوده، و پس از آلوده شدن، همیشه آلوده باقی می‌مانند.</li>
+                                        <li><strong>مدل SIR (مستعد-آلوده-بهبودیافته):</strong> در این مدل، افراد آلوده می‌توانند بهبود یابند و پس از آن ایمن شوند.</li>
+                                        <li><strong>مدل SIS (مستعد-آلوده-مستعد):</strong> در این مدل، افراد آلوده می‌توانند بهبود یابند و دوباره مستعد شوند.</li>
+                                    </ul>
+                                    <p>این مدل‌ها می‌توانند برای شبیه‌سازی انتشار ایده‌ها، اطلاعات، آگاهی، یا حتی بیماری‌ها در شبکه‌های انسانی استفاده شوند.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">کنترل‌های انتشار</h5>
+                                    <div class="mb-3">
+                                        <label for="diffusion-model" class="form-label">مدل انتشار:</label>
+                                        <select id="diffusion
+(Content truncated due to size limit. Use line ranges to read in chunks)
